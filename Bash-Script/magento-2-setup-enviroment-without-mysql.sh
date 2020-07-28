@@ -23,6 +23,7 @@ logWrite(){
 }
 
 printf  "${YELLOW} Adding the Repositoy. ${NORMAL}\\n"
+sudo apt-get install software-properties-common
 sudo apt-add-repository ppa:ondrej/php
 
 printf  "${YELLOW} All ready for setting up things for you. Wait for the magic within few moment. ${NORMAL}\\n"
