@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 # log path
 LOG_FULL_PATH=/var/log/magento2-setup-enviroment.log
 LOG_DIR_PATH=/var/log/
@@ -19,6 +21,9 @@ NORMAL="$(tput sgr0)"
 logWrite(){
         echo "$(date) : $1" >> "$LOG_FULL_PATH"
 }
+
+printf  "${YELLOW} Adding the Repositoy. ${NORMAL}\\n"
+sudo apt-add-repository ppa:ondrej/php
 
 printf  "${YELLOW} All ready for setting up things for you. Wait for the magic within few moment. ${NORMAL}\\n"
 
