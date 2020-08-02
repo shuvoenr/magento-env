@@ -5,7 +5,24 @@ GR="$(tput setaf 2)" #GREEN COLOR
 YE="$(tput setaf 3)" # YELLOW COLOR
 NL="$(tput sgr0)"    # RESET COLOR
 
+#--------- Common Method --------#
+
+# Update Source Update
+aptUpdate() {
+  sudo apt-get update --assume-yes
+  printf  "%s Apt Source Updating Done.... %s \n" "$GR" "$NL"
+}
+
+# Upgrade
+aptUpgrade() {
+  sudo apt-get upgrade --assume-yes
+  printf  "%s Apt Source Updating Done.... %s \n" "$GR" "$NL"
+}
+
 # --------------- Start Swap Storage Create ---------------#
+
+aptUpdate  # Update Source
+aptUpgrade  # Upgrade Source
 
 swapCreate() {
     printf  "%s How Many GB you want as Swap (Recommend Double of the Storage) :" "$YE"
@@ -24,12 +41,6 @@ swapCreate() {
     printf  "%s Done. %s \n" "$GR" "$NL"
 }
 
-# --------------- End Swap Storage Create ---------------#
-
-# Update assume yes command
-sudo apt-get update --assume-yes
-printf  "%s Updating Done.... %s \n" "$GR" "$NL"
-
 # Swap Create Initialize
 printf  "%s Do you want to create swap [Y/N] : %s" "$YE" "$NL"
 read -r isSwap
@@ -38,3 +49,5 @@ if [ "$isSwap" = "Y" ] || [ "$isSwap" = "y" ]; then
 else
   printf  "%s Skipped. %s \n" "$GR" "$NL"
 fi
+
+# --------------- End Swap Storage Create ---------------#
