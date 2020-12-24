@@ -43,7 +43,7 @@ installComposer() {
 
 # -- Install PHP
 installPHP() {
-  sudo add-apt-repository ppa:ondrej/php
+  # sudo add-apt-repository ppa:ondrej/php
   sudo apt-get update --assume-yes
   sudo apt-get install --assume-yes php7.4-{common,fpm,cli,pdo,mysql,opcache,xml,gd,mysql,intl,mbstring,bcmath,json,iconv,soap,ctype,curl,dom,intl,xsl,zip,sockets}
 }
@@ -93,6 +93,46 @@ installElasticSearch () {
   fi
 }
 
+# -- Install Redis
+installRedis() {
+  printf "Do you want to install Redis on Same Server? [Y/N] :"
+  read -r isInstallRedis
+  if [ "$isInstallRedis" = "Y" ] || [ "$isInstallRedis" = "y" ]
+  then
+      sudo apt-get update --assume-yes
+      sudo apt-get upgrade --assume-yes
+      sudo apt install redis-server --assume-yes
+      sudo systemctl status redis-server --no-pager
+      PING_PONG=$(redis-cli "ping")
+      if [ "$PING_PONG" = "PONG" ];
+      then
+        printf "PING->PONG Working \n"
+      else
+        printf "I am not working well \n"
+      fi
+      printf "%s\n" "${PING_PONG}"
+
+      printf "Do you want to whitelist external IPs in Redis? [Y/N] :"
+      read -r isExternalIpRedis
+
+      if [ "$isExternalIpRedis" = "Y" ] || [ "$isExternalIpRedis" = "y" ]
+      then
+          # here is a issue like dynamic whitelist not working -- when did we restart redis get stack
+          # printf "Give the IP address
+          #  [Option 1 : Multiple IP separated by whitespace write (do not add 127.0.0.1 or localhost) Example : 192.168.78.44 192.168.77.45 ]
+          #  [Option 2 : Single IP write (do not add 127.0.0.1 or localhost) Example : 192.168.78.44 ]
+          #  [Option 3 : All IP write Example : 0.0.0.0  ]\\n"
+          sudo systemctl restart redis.service
+          sudo systemctl status redis-server --no-pager
+      else
+          printf "No changes done, only by localhost (127.0.0.1) you can access that\\n"
+      fi
+  else
+      printf "Okay Skipping the Redis Install..\\n"
+  fi
+}
+
+
 printf  "We are starting the process, Cooperate by giving you choice, if you asked for anything.... \n"
 
 # Update assume yes command
@@ -112,3 +152,5 @@ installPHP
 # install Elastic Search
 installElasticSearch
 
+# install Redis
+installRedis
