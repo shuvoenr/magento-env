@@ -45,7 +45,7 @@ installComposer() {
 installPHP() {
   # sudo add-apt-repository ppa:ondrej/php
   sudo apt-get update --assume-yes
-  sudo apt-get install --assume-yes php7.4-{common,fpm,cli,pdo,mysql,opcache,xml,gd,mysql,intl,mbstring,bcmath,json,iconv,soap,ctype,curl,dom,intl,xsl,zip,sockets}
+  sudo apt-get install --assume-yes php7.4-{common,fpm,cli,pdo,mysql,opcache,xml,gd,mysql,intl,mbstring,bcmath,json,iconv,soap,ctype,curl,dom,intl,xsl,zip,sockets,gmp}
 }
 
 # -- Install Elastic Search
